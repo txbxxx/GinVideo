@@ -27,9 +27,11 @@ func Router() *gin.Engine {
 
 	video := httpServer.Group("/video")
 	{
-		video.POST("/video", control.CreateVideo)
-		video.GET("/videos", control.ListVideo)
-		video.PUT(":identity", control.ModifyVideo)
+		video.POST("/create", control.CreateVideo)
+		video.GET("/list", control.ListVideo)
+		video.PUT("/:identity", control.ModifyVideo)
+		video.GET("/:identity", control.DetailVideo)
+		video.DELETE("/:identity", control.DeleteVideo)
 	}
 
 	return httpServer

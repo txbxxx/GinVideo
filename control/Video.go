@@ -31,10 +31,29 @@ func ListVideo(c *gin.Context) {
 	c.JSON(200, service.ListVideo())
 }
 
+// ModifyVideo 修改视频
 func ModifyVideo(c *gin.Context) {
 	var service videoSvc.VideoModifySvc
 	if err := c.ShouldBind(&service); err != nil {
 		c.JSON(200, err)
 	}
 	c.JSON(200, service.ModifyVideo(c.Param("identity")))
+}
+
+// DetailVideo 视频详情
+func DetailVideo(c *gin.Context) {
+	var service videoSvc.VideoDetailSvc
+	if err := c.ShouldBind(&service); err != nil {
+		c.JSON(200, err)
+	}
+	c.JSON(200, service.DetailVideo(c.Param("identity")))
+}
+
+// DeleteVideo 删除视频
+func DeleteVideo(c *gin.Context) {
+	var service videoSvc.VideoDeleteSvc
+	if err := c.ShouldBind(&service); err != nil {
+		c.JSON(200, err)
+	}
+	c.JSON(200, service.DeleteVideo(c.Param("identity")))
 }
