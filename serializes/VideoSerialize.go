@@ -14,6 +14,7 @@ type VideoSerialize struct {
 	Identity  string `json:"identity"`
 	Info      string `json:"info"`
 	Title     string `json:"title"`
+	Url       string `json:"url"`
 	CreatedAt int64  `json:"created_at"`
 }
 
@@ -25,6 +26,7 @@ func VideoSerializeList(videos []model.Video) []VideoSerialize {
 			Identity:  video.Identity,
 			Info:      video.Info,
 			Title:     video.Title,
+			Url:       video.Url,
 			CreatedAt: video.CreatedAt.Unix(),
 		})
 	}
@@ -36,6 +38,7 @@ func VideoSerializeSingle(video model.Video) VideoSerialize {
 		Identity:  video.Identity,
 		Info:      video.Info,
 		Title:     video.Title,
+		Url:       video.Url,
 		CreatedAt: video.CreatedAt.Unix(),
 	}
 }

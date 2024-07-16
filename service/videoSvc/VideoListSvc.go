@@ -33,7 +33,6 @@ func (service *VideoListSvc) ListVideo() gin.H {
 			"msg":  "获取视频列表失败",
 		}
 	}
-
 	return gin.H{
 		"code": 200,
 		"page": service.Page,
