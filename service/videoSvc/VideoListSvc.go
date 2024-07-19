@@ -13,6 +13,7 @@ import (
 	"GliGliVideo/serializes"
 	"GliGliVideo/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 type VideoListSvc struct {
@@ -28,6 +29,7 @@ func (service *VideoListSvc) ListVideo() gin.H {
 	//查询列表
 	err := utils.DB.Offset(service.Page).Limit(service.Size).Find(&videos).Error
 	if err != nil {
+		logrus.Println("获取视频列表失败", err)
 		return gin.H{
 			"code": -1,
 			"msg":  "获取视频列表失败",

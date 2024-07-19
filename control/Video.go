@@ -11,13 +11,17 @@ package control
 import (
 	"GliGliVideo/service/videoSvc"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 // CreateVideo 创建视频
 func CreateVideo(c *gin.Context) {
 	var service videoSvc.VideoCreateSvc
 	if err := c.ShouldBind(&service); err != nil {
-		c.JSON(200, err)
+		c.JSON(200, gin.H{
+			"msg": err.Error(),
+		})
+		return
 	}
 	c.JSON(200, service.CreateVideo())
 }
@@ -26,7 +30,11 @@ func CreateVideo(c *gin.Context) {
 func ListVideo(c *gin.Context) {
 	var service videoSvc.VideoListSvc
 	if err := c.ShouldBind(&service); err != nil {
-		c.JSON(200, err)
+		logrus.Println("列出视频错误", err.Error())
+		c.JSON(200, gin.H{
+			"msg": err.Error(),
+		})
+		return
 	}
 	c.JSON(200, service.ListVideo())
 }
@@ -35,7 +43,10 @@ func ListVideo(c *gin.Context) {
 func ModifyVideo(c *gin.Context) {
 	var service videoSvc.VideoModifySvc
 	if err := c.ShouldBind(&service); err != nil {
-		c.JSON(200, err)
+		c.JSON(200, gin.H{
+			"msg": err.Error(),
+		})
+		return
 	}
 	c.JSON(200, service.ModifyVideo(c.Param("identity")))
 }
@@ -44,7 +55,10 @@ func ModifyVideo(c *gin.Context) {
 func DetailVideo(c *gin.Context) {
 	var service videoSvc.VideoDetailSvc
 	if err := c.ShouldBind(&service); err != nil {
-		c.JSON(200, err)
+		c.JSON(200, gin.H{
+			"msg": err.Error(),
+		})
+		return
 	}
 	c.JSON(200, service.DetailVideo(c.Param("identity")))
 }
@@ -53,7 +67,22 @@ func DetailVideo(c *gin.Context) {
 func DeleteVideo(c *gin.Context) {
 	var service videoSvc.VideoDeleteSvc
 	if err := c.ShouldBind(&service); err != nil {
-		c.JSON(200, err)
+		c.JSON(200, gin.H{
+			"msg": err.Error(),
+		})
+		return
 	}
 	c.JSON(200, service.DeleteVideo(c.Param("identity")))
+}
+
+// UploadVideo 上传视频
+func UploadVideo(c *gin.Context) {
+	var service videoSvc.VideoUploadSvc
+	if err := c.ShouldBind(&service); err != nil {
+		c.JSON(200, gin.H{
+			"msg": err.Error(),
+		})
+		return
+	}
+	c.JSON(200, service.Post())
 }

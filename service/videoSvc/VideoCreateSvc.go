@@ -17,9 +17,10 @@ import (
 )
 
 type VideoCreateSvc struct {
-	Title string `json:"title" form:"title" binding:"required,min=5,max=100"`
+	Title string `json:"title" form:"title" binding:"required,max=100"`
 	Info  string `json:"info" form:"info"`
-	Url   string `json:"url" form:"url" binding:"required,min=5,max=80"`
+	Url   string `json:"url" form:"url" binding:"required"`
+	Cover string `json:"cover" form:"cover" binding:"required"`
 }
 
 func (service *VideoCreateSvc) CreateVideo() gin.H {
@@ -29,6 +30,7 @@ func (service *VideoCreateSvc) CreateVideo() gin.H {
 		Title:    service.Title,
 		Info:     service.Info,
 		Url:      service.Url,
+		Cover:    service.Cover,
 	}
 
 	//插入数据库

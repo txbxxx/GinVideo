@@ -32,7 +32,7 @@ func Router() *gin.Engine {
 		video.PUT("/:identity", control.ModifyVideo)
 		video.GET("/:identity", control.DetailVideo)
 		video.DELETE("/:identity", control.DeleteVideo)
+		video.POST("/upload", control.UploadVideo)
 	}
-
 	return httpServer
 }

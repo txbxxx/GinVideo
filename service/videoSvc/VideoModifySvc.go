@@ -13,6 +13,7 @@ import (
 	"GliGliVideo/utils"
 	"errors"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -32,6 +33,7 @@ func (service *VideoModifySvc) ModifyVideo(identity string) gin.H {
 				"msg":  "视频不存在",
 			}
 		}
+		logrus.Println("数据库错误: ", err.Error())
 		return gin.H{
 			"code": -1,
 			"msg":  "数据库错误",
@@ -46,6 +48,7 @@ func (service *VideoModifySvc) ModifyVideo(identity string) gin.H {
 
 	err = utils.DB.Where("identity = ?", identity).Updates(&modifyV).Error
 	if err != nil {
+		logrus.Println("数据库错误: ", err.Error())
 		return gin.H{
 			"code": -1,
 			"msg":  "数据库错误",
