@@ -11,6 +11,7 @@ package serializes
 import (
 	"GliGliVideo/model"
 	"GliGliVideo/utils"
+	"GliGliVideo/utils/Rank"
 )
 
 type VideoSerialize struct {
@@ -19,6 +20,7 @@ type VideoSerialize struct {
 	Title     string `json:"title"`
 	Url       string `json:"url"`
 	Cover     string `json:"cover"`
+	View      uint64 `json:"view"`
 	CreatedAt int64  `json:"created_at"`
 }
 
@@ -32,6 +34,7 @@ func VideoSerializeList(videos []model.Video) []VideoSerialize {
 			Title:     video.Title,
 			Url:       utils.VideoURL(video.Url),
 			Cover:     utils.CoverURL(video.Cover),
+			View:      Rank.View(video),
 			CreatedAt: video.CreatedAt.Unix(),
 		})
 	}
@@ -45,6 +48,7 @@ func VideoSerializeSingle(video model.Video) VideoSerialize {
 		Title:     video.Title,
 		Url:       utils.VideoURL(video.Url),
 		Cover:     utils.CoverURL(video.Cover),
+		View:      Rank.View(video),
 		CreatedAt: video.CreatedAt.Unix(),
 	}
 }

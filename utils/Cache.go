@@ -9,13 +9,16 @@
 package utils
 
 import (
+	"context"
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	"strconv"
 )
 
+var Cache *redis.Client
+
 // RedisUtils redis连接
-func RedisUtils(RDBAddr, RDBPwd, RDBDefaultDB string) *redis.Client {
+func RedisUtils(RDBAddr, RDBPwd, RDBDefaultDB string) {
 	// 将字符串转换成int
 	RDB, err := strconv.Atoi(RDBDefaultDB)
 	if err != nil {
@@ -23,9 +26,15 @@ func RedisUtils(RDBAddr, RDBPwd, RDBDefaultDB string) *redis.Client {
 	}
 
 	//连接redis
-	return redis.NewClient(&redis.Options{
+	client := redis.NewClient(&redis.Options{
 		Addr:     RDBAddr,
 		Password: RDBPwd,
 		DB:       RDB,
 	})
+	ping := client.Ping(context.Background())
+	fmt.Println("test: ", ping)
+	if ping.Err() != nil {
+		fmt.Println("redis连接失败！")
+	}
+	Cache = client
 }

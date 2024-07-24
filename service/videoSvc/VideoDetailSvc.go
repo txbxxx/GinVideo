@@ -12,6 +12,7 @@ import (
 	"GliGliVideo/model"
 	"GliGliVideo/serializes"
 	"GliGliVideo/utils"
+	"GliGliVideo/utils/Rank"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -22,7 +23,7 @@ type VideoDetailSvc struct {
 }
 
 func (service *VideoDetailSvc) DetailVideo(identity string) gin.H {
-	//通过identity查找用户是否存在
+	//通过identity查找视频是否存在
 	var video model.Video
 	err := utils.DB.Where("identity = ?", identity).Take(&video).Error
 	if err != nil {
@@ -38,6 +39,8 @@ func (service *VideoDetailSvc) DetailVideo(identity string) gin.H {
 			"msg":  "数据库错误",
 		}
 	}
+	//处理视频被观看的一系问题
+	Rank.AddView(video)
 
 	//存在直接返回
 	return gin.H{

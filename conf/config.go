@@ -10,6 +10,7 @@ package conf
 
 import (
 	"GliGliVideo/utils"
+	"GliGliVideo/utils/cron"
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
@@ -33,4 +34,7 @@ func Init() {
 	logLevel, _ := strconv.Atoi(os.Getenv("LOG_LEVEL"))
 	logrus.SetLevel(logrus.Level(logLevel))
 	logrus.SetReportCaller(true)
+
+	// 启动定时任务
+	cron.CronJob()
 }

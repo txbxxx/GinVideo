@@ -10,6 +10,7 @@ package utils
 
 import (
 	"context"
+	"fmt"
 	"github.com/tencentyun/cos-go-sdk-v5"
 	sts "github.com/tencentyun/qcloud-cos-sts-sdk/go"
 	"net/http"
@@ -57,7 +58,11 @@ func CosToken() (*sts.Credentials, error) {
 
 // VideoURL 视频URL
 func VideoURL(URL string) string {
-	token, _ := CosToken()
+	token, err := CosToken()
+	if err != nil {
+		fmt.Println(err)
+		return "获取数据错误"
+	}
 	u, _ := url.Parse("https://govideo-1305907375.cos.ap-hongkong.myqcloud.com")
 	b := &cos.BaseURL{BucketURL: u}
 	c := cos.NewClient(b, &http.Client{})
@@ -73,7 +78,11 @@ func VideoURL(URL string) string {
 
 // CoverURL 封面URL
 func CoverURL(URL string) string {
-	token, _ := CosToken()
+	token, err := CosToken()
+	if err != nil {
+		fmt.Println(err)
+		return "获取数据错误"
+	}
 	u, _ := url.Parse("https://govideo-1305907375.cos.ap-hongkong.myqcloud.com")
 	b := &cos.BaseURL{BucketURL: u}
 	c := cos.NewClient(b, &http.Client{})
